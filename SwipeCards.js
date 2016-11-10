@@ -66,6 +66,7 @@ class SwipeCards extends Component {
   }
 
   _goToNextCard() {
+
     let currentCardIdx = this.props.cards.indexOf(this.state.card);
     let newIdx = currentCardIdx + 1;
 
@@ -91,8 +92,8 @@ class SwipeCards extends Component {
     ).start();
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.cards && nextProps.cards.length > 0){
+  componentWillReceiveProps(nextProps:any){
+    if((nextProps.cards != this.props.cards || this.state.card == null)&& nextProps.cards.length > 0){
       this.setState({
         card: nextProps.cards[0]
       })
@@ -190,46 +191,46 @@ class SwipeCards extends Component {
 
         return (
             <View style={this.props.containerStyle}>
-                { this.state.card
-                    ? (
-                    <Animated.View style={[this.props.cardStyle, animatedCardstyles]} {...this._panResponder.panHandlers}>
-                        {this.renderCard(this.state.card)}
-                    </Animated.View>
+              { this.state.card
+                ? (
+                  <Animated.View style={[this.props.cardStyle, animatedCardstyles]} {...this._panResponder.panHandlers}>
+                    {this.renderCard(this.state.card)}
+                  </Animated.View>
                 )
-                    : this.renderNoMoreCards() }
+              : this.renderNoMoreCards() }
 
 
-                { this.props.renderNope
-                  ? this.props.renderNope(pan)
-                  : (
-                      this.props.showNope
-                      ? (
-                        <Animated.View style={[this.props.nopeStyle, animatedNopeStyles]}>
-                            {this.props.noView
-                                ? this.props.noView
-                                : <Text style={this.props.nopeTextStyle}>{this.props.noText ? this.props.noText : "Nope!"}</Text>
-                            }
-                        </Animated.View>
-                        )
-                      : null
-                    )
-                }
+              { this.props.renderNope
+                ? this.props.renderNope(pan)
+                : (
+                this.props.showNope
+                ? (
+                  <Animated.View style={[this.props.nopeStyle, animatedNopeStyles]}>
+                    {this.props.noView
+                      ? this.props.noView
+                        : <Text style={this.props.nopeTextStyle}>{this.props.noText ? this.props.noText : "Nope!"}</Text>
+                    }
+                  </Animated.View>
+                )
+                : null
+                )
+              }
 
-                { this.props.renderYup
-                  ? this.props.renderYup(pan)
-                  : (
-                      this.props.showYup
-                      ? (
-                        <Animated.View style={[this.props.yupStyle, animatedYupStyles]}>
-                            {this.props.yupView
-                                ? this.props.yupView
-                                : <Text style={this.props.yupTextStyle}>{this.props.yupText? this.props.yupText : "Yup!"}</Text>
-                            }
-                        </Animated.View>
-                      )
-                      : null
-                    )
-                }
+              { this.props.renderYup
+                ? this.props.renderYup(pan)
+                : (
+                this.props.showYup
+                ? (
+                  <Animated.View style={[this.props.yupStyle, animatedYupStyles]}>
+                    {this.props.yupView
+                      ? this.props.yupView
+                        : <Text style={this.props.yupTextStyle}>{this.props.yupText? this.props.yupText : "Yup!"}</Text>
+                    }
+                  </Animated.View>
+                )
+                : null
+                )
+              }
 
             </View>
     );
@@ -269,3 +270,4 @@ SwipeCards.defaultProps = {
 };
 
 export default SwipeCards
+
